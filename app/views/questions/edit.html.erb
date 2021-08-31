@@ -1,0 +1,9 @@
+<h1>Questions#edit</h1>
+<p>Find me in app/views/questions/edit.html.erb</p>
+
+<%= form_for @question do |f| %>
+    <%= f.label :body %>
+    <%= f.text_field :body, :size => 140 %> 
+    <%= f.submit "編集する" %>
+<% end %>
+<%= link_to "質問一覧に戻る", top_index_path %>

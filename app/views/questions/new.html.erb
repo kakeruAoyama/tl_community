@@ -1,0 +1,10 @@
+<h1>Questions#new</h1>
+<p>Find me in app/views/questions/new.html.erb</p>
+<%= form_for @question do |f| %>
+  <div class="field">
+    <%= f.label :質問内容 %>
+    <%= f.text_field :body, :size => 140 %>
+  </div>
+  <%= f.submit "質問する" %>
+<% end %>
+<%= link_to "質問一覧へ", top_index_path %>
