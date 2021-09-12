@@ -13,6 +13,13 @@ class AnswersController < ApplicationController
         redirect_back(fallback_location: root_path)
       end
     end
+
+    def destroy
+      answer = Answer.find(params[:id])
+      answer.destroy
+      redirect_to "http://localhost:3000/question/:id"
+    end
+    
   
     private
   

@@ -1,14 +1,16 @@
 Rails.application.routes.draw do
-  get 'evaluations/new'
-  get 'evaluations/create'
+
+  get 'evaluations/show/:lecture_id' => 'evaluations#show',as: 'evaluations_show'
+  get 'evaluations/new/:lecture_id' => 'evaluations#new', as: 'evaluations_new'
+  post 'evaluations/new/:lecture_id' => 'evaluations#create' 
   get 'evaluations/edit'
   get 'evaluations/update'
 
   get 'comments/create'
   get 'comments/destroy'
   
-  get 'lectures/index'
-  get 'lectures/show'
+  get 'lectures/index' => 'lectures#index'
+  # get 'lectures/show' => 'lectures#show'
   
   get 'top/about'
   get 'top/index'
@@ -20,17 +22,27 @@ Rails.application.routes.draw do
   delete 'questions/:id' => 'questions#destroy'
   get 'questions/:id/edit' => 'questions#edit', as:'edit_question'
   
+
+  devise_scope :user do
+    # TIPS: ユーザー登録失敗のリダイレクトのエラーを防ぐ https://github.com/heartcombo/devise/blob/master/app/controllers/devise/registrations_controller.rb
+    get '/users', to: 'devise/registrations#new'
+  end
+
   devise_for :users
   resources :users, only: [:show]
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   resources :questions do
-    resources :answers, only: [:create]
+    resources :answers, only: [:create, :destroy]
   end
 
-  resources :lectures
+  resources :lectures do
+    resources :comments, only: [:create, :destroy]
+  end
+
   resources :top
+  resources :evaluations
 
   root 'top#about'
 

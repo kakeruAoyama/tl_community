@@ -1,20 +1,61 @@
+<%# jsの記述、リアルタイムバリデーションチェック %>
+<script>
+const validation = () => {
+  // :loginエラー実装
+    // 半角英数記号以外にマッチ
+    const loginPattern = /^[a-zA-Z0-9!-/:-@¥[-`{-~]+$/;
+    // エラーメッセージ
+    const loginErrorMessage = document.getElementById("login-error");
+    // フォームの要素
+    const loginKey = document.getElementById("login-key");
+
+  // パスワードエラー実装
+  const passPattern = /^[a-zA-Z0-9]+$/;
+  const passErrorMessage = document.getElementById("password-error");
+  const passKey = document.getElementById("password");
+
+    addEventListener("keyup", e => {
+        if ( loginPattern.test(loginKey.value) || loginKey.value == "" ) {
+          // loginKeyの内容が指定通りor空白のとき、エラーメッセージを表示しない
+          loginErrorMessage.style.visibility = "hidden";
+        }
+        else {
+            loginErrorMessage.style.visibility = "visible";
+        }
+        if ( passPattern.test(passKey.value) || passKey.value == "" ) {
+          passErrorMessage.style.visibility = "hidden";
+        }
+        else {
+          passErrorMessage.style.visibility = "visible";
+        }
+    })
+}
+
+window.addEventListener("keydown", validation)
+</script>
+
+<%# ページ内容 %>
 <h2>ログイン</h2>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="field">
-    <%= f.label :メールアドレス %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.label :メールアドレスorユーザーネーム %><br />
+    <%= f.text_field :login, id: "login-key" , required: true %>
   </div>
+
+  <div id="login-error" class="login-error">メールアドレスorユーザーネームは半角英数字で入力してください</div>
 
   <div class="field">
     <%= f.label :パスワード %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
+    <%= f.password_field :password, autocomplete: "current-password", id: "password" , required: true %>
   </div>
+
+  <div id="password-error" class="password-error">パスワードは半角英数字で入力してください</div>
 
   <% if devise_mapping.rememberable? %>
     <div class="field">
       <%= f.check_box :remember_me %>
-      <%= f.label :このブラウザを信頼する %>
+      <%= f.label :パスワードを保存する %>
     </div>
   <% end %>
 

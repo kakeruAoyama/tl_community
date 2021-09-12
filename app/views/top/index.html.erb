@@ -12,6 +12,7 @@
 <div class="questions-container">
     <% @questions.order("updated_at desc").each do |t| %>
         <div class="question">
+            <%= t.user.name %>
             <%= t.body %>
             <%= t.updated_at %>
             <%= link_to "詳細へ", question_path(t.id) %>

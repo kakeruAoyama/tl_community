@@ -5,3 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+# coding: utf-8
+
+    Lecture.create(:name => '電子情報工学特論', :teacher => '鶴田直之')
+    Lecture.create(:name => '力学A', :teacher => '橋本正章')

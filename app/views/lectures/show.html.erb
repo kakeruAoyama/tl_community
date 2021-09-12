@@ -2,5 +2,26 @@
 <p>Find me in app/views/lectures/show.html.erb</p>
 <p>講義詳細ページ</p>
 
-<%= link_to "評価について", evaluations_create_path %><br />
-<%= link_to "講義一覧に戻る", lectures_index_path %>
+<div class="comment-wrapper">
+  <p>コメント一覧</p>
+  <% @comments.each do |c| %>
+    <div>
+      <%= c.user.name unless c.user.blank? %>
+      <br>
+      <%= c.body %>
+    </div>
+      <br>
+  <% end %>
+
+  <% if user_signed_in? %>
+    <%= form_with(model: [@lecture, @comment], local: true) do |f| %>
+      <%= f.text_area :body %>
+      <%= button_tag type: "submit" do %>
+        <i class="far fa-comments"></i> コメントする
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+<%= link_to "評価の詳細", evaluations_show_path(@lecture.id) %><br />
+<%= link_to "講義一覧に戻る", lectures_path %>
