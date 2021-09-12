@@ -18,8 +18,8 @@ class User < ApplicationRecord
   has_many :evaluations, dependent: :destroy
 
   # 多対多のアソシエーション
-  has_many :lectures, through: :current_lectures
-  has_many :lectures, through: :past_lectures
+  has_many :lectures_current, through: :current_lectures
+  has_many :lectures_past, through: :past_lectures
   has_many :current_lectures, dependent: :destroy
   has_many :past_lectures, dependent: :destroy
 
